@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "99069251079",
+    "project_id": "photoshoot-a00f8",
+    "storage_bucket": "photoshoot-a00f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99069251079:android:9d8196e574461c86b7a4a2",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxlc8Lqq9XM1HRxMuv74wCoyhlDIv9Cac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
