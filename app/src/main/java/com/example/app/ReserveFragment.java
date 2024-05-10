@@ -1,8 +1,10 @@
 package com.example.app;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,7 +16,10 @@ import android.view.ViewGroup;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,13 +34,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
 public class ReserveFragment extends Fragment {
+    private Button btnDatepicker;
+    private TextView txtDateReserve;
     private ProgressDialog progressDialog;
-    private Spinner typepackage_spinner;
+    private Spinner time_spinner, typepackage_spinner;
     private StringRequest stringRequest;
     private RequestQueue requestQueue;
     private int packageid ;
@@ -70,13 +80,20 @@ public class ReserveFragment extends Fragment {
         progressDialog = new ProgressDialog(requireContext());
         requestQueue = Volley.newRequestQueue(requireContext());
 
+        btnDatepicker = view.findViewById(R.id.btnDatepicker);
+        txtDateReserve = view.findViewById(R.id.txtDateReserve);
+        time_spinner = view.findViewById(R.id.time_spinner);
         typepackage_spinner = view.findViewById(R.id.typepackage_spinner);
 
-        // Setup spinners and listeners
-        setupMainPackageSpinner();
         getPackage();
-        setupAddTimeSpinner();
+        setupTimeSpinner();
 
+        btnDatepicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDatePicker(); // Open date picker dialog
+            }
+        });
 
 
         // Set up the OnItemSelectedListener for typepackage_spinner
@@ -85,7 +102,6 @@ public class ReserveFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 // Get the selected Package object from the spinner adapter
                 Package selectedPackage = (Package) adapterView.getItemAtPosition(position);
-
 
                 packageid = selectedPackage.getPackageID();
                 // Display the selected PackageName in a Toast
@@ -101,38 +117,9 @@ public class ReserveFragment extends Fragment {
         return view;
     }
 
-    private void setupAddTimeSpinner() {
-        String[] addTime = {
-                "0 minutes", "10 minutes", "20 minutes",
-                "30 minutes", "40 minutes",
-                "50 minutes", "60 minutes/1 hour"
-        };
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                addTime
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //addtionaltime_spinner.setAdapter(adapter);
-    }
-
-    private void setupMainPackageSpinner() {
-        String[] mainPackage = {
-                "Digital Package", "Digital and Print Package"
-        };
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                mainPackage
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //mainpackage_spinner.setAdapter(adapter);
-    }
-
+    //fetch package from api
     private void getPackage() {
-        String URL = "http://192.168.1.6/Photoshoot-Reservation/api/packages/get.php";
+        String URL = "http://192.168.1.12/Photoshoot-Reservation/api/packages/get.php";
 
         progressDialog.show();
 
@@ -192,4 +179,64 @@ public class ReserveFragment extends Fragment {
             Toast.makeText(requireContext(), "Error parsing JSON response", Toast.LENGTH_LONG).show();
         }
     }
+    private void openDatePicker() {
+        // Get the current date using Calendar
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // Show the picked value in the TextView
+                String formattedDate = String.format(Locale.getDefault(), "%1$tB %1$td, %1$tY", new Date(year - 1900, month, day));
+                txtDateReserve.setText(formattedDate);
+
+            }
+        }, currentYear, currentMonth, currentDay);
+
+        datePickerDialog.show();
+    }
+
+    private void setupTimeSpinner() {
+        String[] addTime = {
+                "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM",
+                "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
+                "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM",
+                "5:00 PM", "5:30 PM", "6:00 PM", "6:30 PM",
+                "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM"
+        };
+
+        String[] addTimeValues = {
+                "11:00:00", "11:30:00", "12:00:00", "12:30:00",
+                "13:00:00", "13:30:00", "14:00:00", "14:30:00",
+                "15:00:00", "15:30:00", "16:00:00", "16:30:00",
+                "17:00:00", "17:30:00", "18:00:00", "18:30:00",
+                "19:00:00", "19:30:00", "20:00:00", "20:30:00"
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                addTime
+        );
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        time_spinner.setAdapter(adapter);
+
+        time_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                String selectedValue = addTimeValues[position];
+                // Use the selectedValue (24-hour format) as needed
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // Handle when nothing is selected
+            }
+        });
+    }
+
 }

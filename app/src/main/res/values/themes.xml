@@ -10,4 +10,10 @@
     </style>
 
     <style name="Theme.App" parent="Base.Theme.App" />
+
+    <style name="DialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorAccent">@color/primary</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

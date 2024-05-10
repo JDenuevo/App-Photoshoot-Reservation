@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="5dp"
     android:orientation="vertical"
     tools:context=".ReserveFragment">
 
@@ -12,75 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/input_app_bg"
-            android:selectedWeekBackgroundColor="@color/primary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/calendarView"
-            app:layout_constraintStart_toStartOf="@+id/calendarView"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/availbox"
-                android:drawablePadding="3dp"
-                android:paddingLeft="15dp"
-                android:text="Available" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/notavailbox"
-                android:drawablePadding="3dp"
-                android:paddingLeft="15dp"
-                android:text="Not Available" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/reservedbox"
-                android:drawablePadding="3dp"
-                android:paddingLeft="15dp"
-                android:text="Reserved" />
-        </LinearLayout>
-
         <TextView
             android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:text="RESERVATION"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView7"
@@ -103,37 +50,40 @@
             app:layout_constraintStart_toStartOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/textView7">
 
-            <EditText
-                android:id="@+id/inputDateReserve"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/input_app_bg"
-                android:ems="10"
-                android:fontFamily="sans-serif"
-                android:hint="Date of Reservation"
-                android:inputType="datetime|date"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/secondary"
-                android:textSize="13sp" />
+                android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/inputTimeReserve"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/input_app_bg"
-                android:ems="10"
-                android:fontFamily="sans-serif"
-                android:hint="Time of Reservation"
-                android:inputType="datetime|time"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/secondary"
-                android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/txtDateReserve"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/input_app_bg"
+                    android:fontFamily="sans-serif"
+                    android:hint="Date of Reservation"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/secondary"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnDatepicker"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btnDatepicker"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/baseline_calendar_month"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -149,40 +99,67 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtAddTime"
+                    android:id="@+id/txtTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="Select type of Package"
+                    android:layout_marginStart="5dp"
+                    android:text="Select Time"
+                    android:textColor="@color/black" />
+
+                <Spinner
+                    android:id="@+id/time_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/input_app_bg"
+                    android:padding="10dp"
+                    android:prompt="@string/select_time"
                     android:textColor="@color/black"
                     android:textSize="13sp" />
+
+
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout9"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout9"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/txtPackage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Select Package"
+                    android:textColor="@color/black" />
 
                 <Spinner
                     android:id="@+id/typepackage_spinner"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/input_app_bg"
                     android:padding="10dp"
                     android:prompt="@string/select_typepackage"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:layout_height="match_parent"/>
+                    android:textSize="13sp" />
 
 
             </LinearLayout>
-
         </LinearLayout>
 
         <Button
@@ -192,7 +169,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/primary_bg"
-            android:text="Reserve Slot"
+            android:text="Request Appointment"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -200,9 +177,8 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout9"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/linearLayout9"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

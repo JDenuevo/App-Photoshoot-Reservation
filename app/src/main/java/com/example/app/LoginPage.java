@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -67,7 +68,7 @@ public class LoginPage extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String URL = "http://192.168.1.6/Photoshoot-Reservation/api/accounts/login.php";
+                String URL = "http://192.168.1.12/Photoshoot-Reservation/api/accounts/login.php";
 
                 progressDialog.show();
 
@@ -142,8 +143,6 @@ public class LoginPage extends AppCompatActivity {
             }
         });
 
-
-
         TextView textforgotPass = findViewById(R.id.textforgotPass);
         textforgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +152,8 @@ public class LoginPage extends AppCompatActivity {
                 finish();
             }
         });
-        TextView btnGoogle = findViewById(R.id.btnGoogle);
+
+        LinearLayout btnGoogle = findViewById(R.id.btnGoogle);
         btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,7 +201,7 @@ public class LoginPage extends AppCompatActivity {
                      }
 
                      //success
-                     String URL = "http://192.168.1.6/Photoshoot-Reservation/api/accounts/loginGoogle.php";
+                     String URL = "http://192.168.1.12/Photoshoot-Reservation/api/accounts/loginGoogle.php";
 
                      progressDialog.show();
 

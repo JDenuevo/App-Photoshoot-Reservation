@@ -13,18 +13,19 @@ import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         TextView txtFullname = view.findViewById(R.id.txtFullname); // Corrected
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext()); // Changed to requireContext()
         int userId = preferences.getInt("userid", -1);
         String userFirstname = preferences.getString("userFirstname", "");
         String userLastname = preferences.getString("userLastname", "");
         txtFullname.setText(userFirstname + " " + userLastname);
-        return view;
 
+        return view;
     }
+
 }
